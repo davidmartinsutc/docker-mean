@@ -1,0 +1,21 @@
+version: '3.7'  # docker-compose version https://docs.docker.com/compose/compose-file/
+
+# Define the services / containers to run
+
+services:
+  angular: # name of the service
+    build: angular2-app # Dockerfile directory for angular2
+    ports:
+      - "4200:4200" # port mapping host:container. Access the app through this port
+
+  express: # name of the express node.js / service
+    build: express-server # Dockerfile directory for express
+    ports:
+      - "3000:3000" # port mapping host:container
+    links:
+      - database # link this service to the database
+
+  database: # name of the database service
+    image: mongo # image to build the database from. Image will be pull from the dockerhub
+    ports:
+      - "27017:27017"  # port mapping host:container for mongodb
